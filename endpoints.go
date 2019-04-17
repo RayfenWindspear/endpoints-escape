@@ -145,8 +145,12 @@ func EndpointHandlerWrapper(service interface{}, name string) http.HandlerFunc {
 
 		// Check if method returned an error
 		if errr := errValue.Interface(); errr != nil {
-			//logAlwaysNoContext(r, "errr")
-			w.WriteHeader(http.StatusInternalServerError)
+			switch t := errr.(type) {
+			case *APIError:
+				w.WriteHeader(t.Code)
+			default:
+				w.WriteHeader(http.StatusInternalServerError)
+			}
 			if err := json.NewEncoder(w).Encode(errr); err != nil {
 				logAlwaysNoContext(r, "encode errr")
 			}
