@@ -8,10 +8,10 @@ Usage:
 Add a method to your service struct with the path prefix you may have had before.
 
 ```
-type AppDocsService struct{}
+type AppService struct{}
 
-func (s *AppDocsService) EndpointPrefix() string {
-	return "/appdocs/v1/"
+func (s *AppService) EndpointPrefix() string {
+	return "/app/v1/"
 }
 ```
 
@@ -24,6 +24,6 @@ register := func(service endpoints.Service, orig, name, method, path, desc strin
 Use almost as before, but create an instance of your struct and pass in as first argument. Note that depending on your particular usage, this might be the only change you have to make to your calls to register.
 
 ```
-appDocsService := &AppDocsService{}
-register(appDocsService, "AppDocsSubmit", "appDocsSubmit", "POST", "appDocsSubmit", "AppDocs submission endpoint", false)
+appService := &AppService{}
+register(appService, "AppSubmit", "appSubmit", "POST", "appSubmit", "App submission endpoint", false)
 ```
